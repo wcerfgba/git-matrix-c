@@ -1,3 +1,3 @@
-bin_PROGRAMS = hello
-hello_SOURCES = main.c
+bin_PROGRAMS = git-matrix
+git_matrix_SOURCES = main.c
 

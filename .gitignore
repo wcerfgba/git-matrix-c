@@ -13,3 +13,4 @@ missing
 config.h*
 stamp-h1
 .deps/
+git-matrix
