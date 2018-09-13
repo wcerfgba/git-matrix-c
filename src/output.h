@@ -1,4 +1,8 @@
 #include "matrix.h"
 
-// TODO: need a success/failure return type
-typedef void (*OutputF)(Matrix *matrix);
+typedef struct OutputStatus {
+  bool success;
+  char *error;
+} OutputStatus;
+
+typedef OutputStatus (*OutputF)(Matrix *matrix);
