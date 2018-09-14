@@ -1,3 +1,6 @@
+#ifndef GIT_MATRIX_OUTPUT_H
+#define GIT_MATRIX_OUTPUT_H
+
 #include "matrix.h"
 
 typedef struct OutputStatus {
@@ -6,3 +9,5 @@ typedef struct OutputStatus {
 } OutputStatus;
 
 typedef OutputStatus (*OutputF)(Matrix *matrix);
+
+#endif
