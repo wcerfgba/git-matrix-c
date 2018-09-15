@@ -11,11 +11,11 @@ typedef struct GodContext {
 } GodContext;
 
 void on_commit(GodContext *ctx, ParserCommit commit) {
-	printf(ctx->matrix->qwe);
+	matrix_add_commit(ctx->matrix, commit);
 }
 
 int main() {
-	Matrix matrix = matrix_init();
+	Matrix matrix = matrix_init((MatrixConfig){ .type = MATRIX_TYPE_CHANGE_COUNT });
 
 	Parser parser = parser_init((ParserConfig){
 		.on_commit = on_commit,
@@ -25,6 +25,8 @@ int main() {
 	char buf[GIT_READ_BUFFER_LENGTH];
 	FILE *git = popen(GIT_LOG_CMD, "r");
 	while (fgets(buf, GIT_READ_BUFFER_LENGTH, git)) {
-		printf(buf);
+		parser_add_chunk(&parser, buf);
 	}
+
+	// TODO
 }
