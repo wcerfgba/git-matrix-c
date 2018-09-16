@@ -2,6 +2,7 @@
 
 OutputStatus output_csv(Matrix *matrix) {
   return (OutputStatus){
-    .success = 1,
+    .success = 0,
+    .error = "This is unimplemented!"
   };
 }

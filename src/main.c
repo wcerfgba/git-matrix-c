@@ -1,4 +1,7 @@
+#define _POSIX_C_SOURCE 2
+
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "matrix.h"
 #include "parser.h"
@@ -22,30 +25,31 @@ void on_commit(GodContext *ctx, ParserCommit commit) {
 }
 
 int main() {
-	// Matrix matrix = matrix_init((MatrixConfig){ .type = MATRIX_TYPE_CHANGE_COUNT });
+	Matrix matrix = matrix_init((MatrixConfig){ .type = MATRIX_TYPE_CHANGE_COUNT });
 
-	// Parser parser = parser_init((ParserConfig){
-	// 	.on_commit = on_commit,
-	// 	.on_commit_ctx = &(GodContext){ .matrix = &matrix }
-	// });
+	Parser parser = parser_init((ParserConfig){
+		.on_commit = on_commit,
+		.on_commit_ctx = &(GodContext){ .matrix = &matrix }
+	});
 
 	char buf[GIT_READ_BUFFER_LENGTH];
 	FILE *git = popen(GIT_LOG_CMD, "r");
 	
 	if (git == NULL) {
 		log_error("Failed to popen");
-		return;
+		exit(1);
 	}
 
 	while (fgets(buf, GIT_READ_BUFFER_LENGTH, git)) {
-		// parser_add_chunk(&parser, buf);
+		printf(buf);
+		parser_add_chunk(&parser, buf);
 	}
 
-	// matrix_sort(&matrix);
+	matrix_sort(&matrix);
 	
-	// OutputStatus output = output_csv(&matrix);
-	// status_check((Status){ 
-	// 	.success = output.success,
-	// 	.error = output.error
-	// });	
+	OutputStatus output = output_csv(&matrix);
+	if (!status_check((Status){ 
+		.success = output.success,
+		.error = output.error
+	})) exit(1);
 }
