@@ -1,8 +1,8 @@
 #ifndef GIT_MATRIX_OUTPUT_CSV_H
 #define GIT_MATRIX_OUTPUT_CSV_H
 
-#include "output.h"
+#include "matrix.h"
 
-OutputStatus output_csv(Matrix *matrix);
+char *render_csv(Matrix *matrix);
 
 #endif

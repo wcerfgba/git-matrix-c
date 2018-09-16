@@ -5,7 +5,7 @@
 
 #include "matrix.h"
 #include "parser.h"
-#include "output_csv.h"
+#include "render_csv.h"
 #include "utils.h"
 
 #define GIT_LOG_CMD "GIT_FLUSH=0 git --no-pager log --format='%n%n%ct %cE' --numstat --no-renames"
@@ -41,15 +41,17 @@ int main() {
 	}
 
 	while (fgets(buf, GIT_READ_BUFFER_LENGTH, git)) {
-		printf(buf);
 		parser_add_chunk(&parser, buf);
 	}
 
+	pclose(git);
+
 	matrix_sort(&matrix);
 	
-	OutputStatus output = output_csv(&matrix);
-	if (!status_check((Status){ 
-		.success = output.success,
-		.error = output.error
-	})) exit(1);
+	FILE *output = stdout;
+	char *output_string = render_csv(&matrix);
+
+	if (fputs(output_string, output) == EOF) {
+		log_error("Failed to fputs: ", ferror(output));
+	}
 }

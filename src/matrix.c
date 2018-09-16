@@ -2,7 +2,8 @@
 
 Matrix matrix_init(MatrixConfig config) {
   return (Matrix){
-    
+    .users = (MatrixUser[]){}
+    // TODO: need stretchy_buffer
   };
 }
 

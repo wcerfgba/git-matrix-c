@@ -2,7 +2,7 @@
 #define GIT_MATRIX_PARSER_H
 
 typedef struct ParserCommit {
-
+  char *committerEmail;
 } ParserCommit;
 
 typedef void (*ParserOnCommitCallback)(void *ctx, ParserCommit commit);
@@ -17,7 +17,7 @@ typedef struct ParserConfig {
 } ParserConfig;
 
 typedef struct Parser {
-
+  struct ParserOnCommitClosure;
 } Parser;
 
 Parser parser_init(ParserConfig config);
