@@ -15,6 +15,7 @@ AC_PROG_CC
 # Checks for header files.
 
 # Checks for typedefs, structures, and compiler characteristics.
+CFLAGS+=" -std=c11 -fms-extensions"
 
 # Checks for library functions.
 

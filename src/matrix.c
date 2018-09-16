@@ -1,7 +1,15 @@
 #include "matrix.h"
 
-Matrix matrix_init() {
+Matrix matrix_init(MatrixConfig config) {
   return (Matrix){
-    .qwe = "yoooo"
+    
   };
+}
+
+void matrix_add_commit(Matrix *matrix, ParserCommit commit) {
+
+}
+
+void matrix_sort(Matrix *matrix) {
+  
 }

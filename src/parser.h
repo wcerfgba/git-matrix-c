@@ -5,15 +5,23 @@ typedef struct ParserCommit {
 
 } ParserCommit;
 
-typedef struct ParserConfig {
-  void (*on_commit)(void *ctx, ParserCommit commit);
+typedef void (*ParserOnCommitCallback)(void *ctx, ParserCommit commit);
+
+typedef struct ParserOnCommitClosure {
+  ParserOnCommitCallback on_commit;
   void *on_commit_ctx;
+} ParserOnCommitClosure;
+
+typedef struct ParserConfig {
+  struct ParserOnCommitClosure;
 } ParserConfig;
 
 typedef struct Parser {
 
 } Parser;
 
-extern Parser parser_init(ParserConfig config);
+Parser parser_init(ParserConfig config);
+
+void parser_add_chunk(Parser *parser, char *chunk);
 
 #endif

@@ -2,12 +2,12 @@
 #define GIT_MATRIX_OUTPUT_H
 
 #include "matrix.h"
+#include "utils.h"
 
 typedef struct OutputStatus {
-  bool success;
-  char *error;
+  struct Status;
 } OutputStatus;
 
-typedef OutputStatus (*OutputF)(Matrix *matrix);
+typedef OutputStatus (*Output)(Matrix *matrix);
 
 #endif
