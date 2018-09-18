@@ -16,10 +16,9 @@ typedef struct MatrixCell {
 } MatrixCell;
 
 typedef struct Matrix {
-  MatrixFile *files;
-  MatrixUser *users;
-  MatrixCell **cells;
-  char *qwe; // for testing
+  MatrixFile **files;   // Array of pointers to files
+  MatrixUser **users;   // Array of pointers to users
+  MatrixCell ***cells;  // 2D array (user * file) of pointers to cells
 } Matrix;
 
 typedef int MatrixType;
@@ -30,6 +29,7 @@ typedef struct MatrixConfig {
 } MatrixConfig;
 
 Matrix matrix_init(MatrixConfig config);
+void matrix_destroy(Matrix *matrix);
 
 void matrix_add_commit(Matrix *matrix, ParserCommit commit);
 

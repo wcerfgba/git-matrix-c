@@ -8,7 +8,7 @@ Parser parser_init(ParserConfig config) {
 }
 
 void parser_add_chunk(Parser *parser, char *chunk) {
-  parser->on_commit(parser.on_commit_ctx, (ParserCommit){
+  parser->on_commit(parser->on_commit_ctx, (ParserCommit){
     .committerEmail = "qwe@asd.com"
   });
 }
