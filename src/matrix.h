@@ -16,9 +16,9 @@ typedef struct MatrixCell {
 } MatrixCell;
 
 typedef struct Matrix {
-  MatrixFile **files;   // Array of pointers to files
-  MatrixUser **users;   // Array of pointers to users
-  MatrixCell ***cells;  // 2D array (user * file) of pointers to cells
+  MatrixFile **files;   // Pointer to array of pointers to files
+  MatrixUser **users;   // Pointer to array of pointers to users
+  MatrixCell ***cells;  // Pointer to 2D array (user * file) of pointers to cells
 } Matrix;
 
 typedef int MatrixType;

@@ -7,13 +7,11 @@ char *render_csv(Matrix *matrix) {
   // First cell is empty because the first column will have file names.
   char *csv = NULL;
 
-  // TODO: why this no work?
-  // for (MatrixUser *user = matrix->users; user != NULL; user++) {
-  // for (size_t i = 0; (void *)(*(matrix->users + i)) != NULL; i++) {
-    MatrixUser *user = matrix->users + i;
-    sb_push(csv, ",");
-    sb_push(csv, user->email);
-    user++;
+  for (MatrixUser **user = matrix->users; *(MatrixUser **)(user) != NULL; user++) {
+    sb_push(csv, ',');
+    char *email = (*(MatrixUser **)(user))->email;
+    sb_add(csv, strlen(email));
+    strcpy(csv + strlen(csv), email);
   }
 
   return csv;

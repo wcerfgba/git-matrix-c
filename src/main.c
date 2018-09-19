@@ -44,7 +44,7 @@ int main() {
 		parser_add_chunk(&parser, buf);
 	}
 
-	pclose(git);
+	// pclose(git);
 
 	matrix_sort(&matrix);
 	

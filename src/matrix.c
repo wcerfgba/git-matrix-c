@@ -9,10 +9,11 @@ Matrix matrix_init(MatrixConfig config) {
 }
 
 void matrix_add_commit(Matrix *matrix, ParserCommit commit) {
-  // TODO: think i need to allocate the user on the heap
-  sb_push(matrix->users, &(MatrixUser){
-    .email = commit.committerEmail
-  });
+  MatrixUser matrixUser = (MatrixUser){
+    .email = heapstr(commit.committerEmail)
+  };
+  MatrixUser *matrixUserHeap = heap(matrixUser);
+  sb_push(matrix->users, matrixUserHeap);
 }
 
 void matrix_sort(Matrix *matrix) {
