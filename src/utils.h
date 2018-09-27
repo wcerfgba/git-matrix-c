@@ -3,10 +3,12 @@
 
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 #include "../vendor/stretchy_buffer.h"
+#include "../vendor/sds/sds.h"
 
-#define heap(value) memcpy(malloc(sizeof value), &value, sizeof value)
-#define heapstr(charptr) strcpy(malloc(strlen(charptr)), charptr)
+#define heap(value) memcpy(malloc(sizeof value), &value, sizeof(value))
+#define heapstr(charptr) strcpy(malloc(strlen(charptr) * sizeof(char)), charptr)
 
 #define log_error(...) {        \
   fprintf(stderr, __VA_ARGS__); \
