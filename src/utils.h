@@ -12,6 +12,15 @@
   fprintf(stderr, __VA_ARGS__); \
 }
 
+#define call(continuation, ...) {                           \
+  (continuation).method((continuation).receiver, __VA_ARGS__);  \
+}
+
+typedef struct Continuation {
+  void (*method)();
+  void *receiver;
+} Continuation;
+
 typedef struct Status {
   int success;
   char *error;

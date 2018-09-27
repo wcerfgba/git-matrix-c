@@ -1,23 +1,20 @@
 #ifndef GIT_MATRIX_PARSER_H
 #define GIT_MATRIX_PARSER_H
 
+#include "utils.h"
+
 typedef struct ParserCommit {
   char *committerEmail;
 } ParserCommit;
 
-typedef void (*ParserOnCommitCallback)(void *ctx, ParserCommit commit);
-
-typedef struct ParserOnCommitClosure {
-  ParserOnCommitCallback on_commit;
-  void *on_commit_ctx;
-} ParserOnCommitClosure;
+typedef void (*ParserOnCommitCallback)(void *receiver, ParserCommit commit);
 
 typedef struct ParserConfig {
-  struct ParserOnCommitClosure;
+  Continuation on_commit;
 } ParserConfig;
 
 typedef struct Parser {
-  struct ParserOnCommitClosure;
+  Continuation on_commit;
 } Parser;
 
 Parser parser_init(ParserConfig config);
