@@ -5,9 +5,9 @@
 
 typedef struct ParserCommit {
   char *committerEmail;
+  int committerTimestamp;
+  
 } ParserCommit;
-
-typedef void (*ParserOnCommitCallback)(void *receiver, ParserCommit commit);
 
 typedef struct ParserConfig {
   Continuation on_commit;

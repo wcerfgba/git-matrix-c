@@ -1,3 +1,15 @@
+# 2018-09-29
+
+interesting reading: https://stackoverflow.com/questions/3039513/type-safe-generic-data-structures-in-plain-old-c/30014893
+
+TODO:
+* Finish matrix_add_commit
+* Implement the parser D:
+* Write test(s)
+* ???
+
+
+
 # 2018-09-27
 
 TODO:
