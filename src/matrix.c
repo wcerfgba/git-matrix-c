@@ -9,17 +9,21 @@ Matrix matrix_init(MatrixConfig config) {
 }
 
 void matrix_add_commit(Matrix *matrix, ParserCommit commit) {
-  MatrixUser matrixUser = (MatrixUser){
-    .email = heapstr(commit.committerEmail)
-  };
-  MatrixUser *matrixUserHeap = heap(matrixUser);
-  sb_push(matrix->users, matrixUserHeap);
+  MatrixUser *matrixUser = matrix_user_alloc((MatrixUser){
+    .email = commit.committerEmail
+  });
+  if (stb_sb_bsearch(&matrixUser, matrix->users, matrix_user_comp) == NULL) {
+    sb_push(matrix->users, matrixUser);
+    stb_sb_qsort(matrix->users, matrix_user_comp);
+  }
 }
 
-void matrix_sort(Matrix *matrix) {
-  // TODO
+MatrixUser *matrix_user_alloc(MatrixUser matrixUser) {
+  return heap((MatrixUser){
+    .email = heapstr(matrixUser.email)
+  });
 }
 
-void matrix_destroy(Matrix *matrix) {
-  // TODO
+int matrix_user_comp(MatrixUser **a, MatrixUser **b) {
+  return strcmp((*a)->email, (*b)->email);
 }

@@ -30,4 +30,8 @@ typedef struct Status {
 
 int status_check(Status status);
 
+void *stb_sb_bsearch(const void *key, const void *ptr, int (*comp)(const void *, const void *));
+
+void stb_sb_qsort(void *ptr, int (*comp)(const void *, const void *));
+
 #endif

@@ -29,8 +29,6 @@ int main() {
 	while (fgets(buf, GIT_READ_BUFFER_LENGTH, git)) {
 		parser_add_chunk(&parser, buf);
 	}
-
-	matrix_sort(&matrix);
 	
 	FILE *output = stdout;
 	char *output_string = render_csv(&matrix);
