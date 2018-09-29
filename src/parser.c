@@ -7,10 +7,10 @@ Parser parser_init(ParserConfig config) {
 }
 
 void parser_add_chunk(Parser *parser, char *chunk) {
+  ParserCommitFile *files = NULL;
+  sb_push(files, (ParserCommitFile){ .name = "yaya.txt" });
   call(parser->on_commit, (ParserCommit){
     .committerEmail = "qwe@asd.com",
-    .files = (ParserCommitFile[]){
-      (ParserCommitFile){ .name = "yaya.txt" }
-    }
+    .files = files
   });
 }

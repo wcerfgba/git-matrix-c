@@ -6,7 +6,7 @@ TODO:
 * Finish matrix_add_commit
 * Implement the parser D:
 * Write test(s)
-* ???
+* Free memory properly
 
 
 

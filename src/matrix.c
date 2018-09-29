@@ -12,8 +12,7 @@ void matrix_add_commit(Matrix *matrix, ParserCommit commit) {
   MatrixUser *newUser = matrix_user_alloc((MatrixUser){
     .email = commit.committerEmail
   });
-  // TODO: pointers
-  MatrixUser **matrixUser = stb_sb_bsearch(matrixUser, matrix->users, matrix_user_comp);
+  MatrixUser **matrixUser = stb_sb_bsearch(&newUser, matrix->users, matrix_user_comp);
   if (matrixUser == NULL) {
     sb_push(matrix->users, newUser);
     matrixUser = &sb_last(matrix->users);
@@ -26,16 +25,16 @@ void matrix_add_commit(Matrix *matrix, ParserCommit commit) {
     sb_push(matrix->cells, newRow);
   }
 
-  for (ParserCommitFile *commitFile = commit.files; commitFile != NULL; commitFile++) {
+  for (ParserCommitFile *commitFile = commit.files; commitFile - commit.files < sb_count(commit.files); commitFile++) {
     MatrixFile *newFile = matrix_file_alloc((MatrixFile){
       .name = commitFile->name
     });
-    MatrixFile **matrixFile = stb_sb_bsearch(newFile, matrix->files, matrix_file_comp);
+    MatrixFile **matrixFile = stb_sb_bsearch(&newFile, matrix->files, matrix_file_comp);
     if (matrixFile == NULL) {
       sb_push(matrix->files, newFile);
       matrixFile = &sb_last(matrix->files);
 
-      for (MatrixCell ***user = matrix->cells; user != NULL; user++) {
+      for (MatrixCell ***user = matrix->cells; user - matrix->cells < sb_count(matrix->cells); user++) {
         sb_push(*user, heap((MatrixCell){ .value = 0 }));
       }
     }
@@ -50,6 +49,12 @@ void matrix_add_commit(Matrix *matrix, ParserCommit commit) {
 MatrixUser *matrix_user_alloc(MatrixUser matrixUser) {
   return heap((MatrixUser){
     .email = heapstr(matrixUser.email)
+  });
+}
+
+MatrixFile *matrix_file_alloc(MatrixFile matrixFile) {
+  return heap((MatrixFile){
+    .name = heapstr(matrixFile.name)
   });
 }
 
