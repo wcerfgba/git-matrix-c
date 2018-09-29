@@ -3,10 +3,14 @@
 
 #include "utils.h"
 
+typedef struct ParserCommitFile {
+  char *name;
+} ParserCommitFile;
+
 typedef struct ParserCommit {
   char *committerEmail;
   int committerTimestamp;
-  
+  ParserCommitFile *files;
 } ParserCommit;
 
 typedef struct ParserConfig {

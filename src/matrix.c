@@ -9,13 +9,42 @@ Matrix matrix_init(MatrixConfig config) {
 }
 
 void matrix_add_commit(Matrix *matrix, ParserCommit commit) {
-  MatrixUser *matrixUser = matrix_user_alloc((MatrixUser){
+  MatrixUser *newUser = matrix_user_alloc((MatrixUser){
     .email = commit.committerEmail
   });
-  if (stb_sb_bsearch(&matrixUser, matrix->users, matrix_user_comp) == NULL) {
-    sb_push(matrix->users, matrixUser);
-    stb_sb_qsort(matrix->users, matrix_user_comp);
+  // TODO: pointers
+  MatrixUser **matrixUser = stb_sb_bsearch(matrixUser, matrix->users, matrix_user_comp);
+  if (matrixUser == NULL) {
+    sb_push(matrix->users, newUser);
+    matrixUser = &sb_last(matrix->users);
+
+    MatrixCell **newRow = NULL;
+    sb_add(newRow, sb_count(matrix->files));
+    for (int i = 0; i < sb_count(newRow); i++) {
+      newRow[i] = heap((MatrixCell){ .value = 0 });
+    }
+    sb_push(matrix->cells, newRow);
   }
+
+  for (ParserCommitFile *commitFile = commit.files; commitFile != NULL; commitFile++) {
+    MatrixFile *newFile = matrix_file_alloc((MatrixFile){
+      .name = commitFile->name
+    });
+    MatrixFile **matrixFile = stb_sb_bsearch(newFile, matrix->files, matrix_file_comp);
+    if (matrixFile == NULL) {
+      sb_push(matrix->files, newFile);
+      matrixFile = &sb_last(matrix->files);
+
+      for (MatrixCell ***user = matrix->cells; user != NULL; user++) {
+        sb_push(*user, heap((MatrixCell){ .value = 0 }));
+      }
+    }
+
+    // TODO: generic value/score calculation
+    matrix->cells[matrixUser - matrix->users][matrixFile - matrix->files]->value++;
+  }
+
+  matrix_sort(matrix);
 }
 
 MatrixUser *matrix_user_alloc(MatrixUser matrixUser) {
@@ -26,4 +55,12 @@ MatrixUser *matrix_user_alloc(MatrixUser matrixUser) {
 
 int matrix_user_comp(MatrixUser **a, MatrixUser **b) {
   return strcmp((*a)->email, (*b)->email);
+}
+
+int matrix_file_comp(MatrixFile **a, MatrixFile **b) {
+  return strcmp((*a)->name, (*b)->name);
+}
+
+void matrix_sort(Matrix *matrix) {
+  stb_sb_qsort(matrix->users, matrix_user_comp);
 }

@@ -32,8 +32,11 @@ Matrix matrix_init(MatrixConfig config);
 
 void matrix_add_commit(Matrix *matrix, ParserCommit commit);
 
+void matrix_sort(Matrix *matrix);
+
 MatrixUser *matrix_user_alloc(MatrixUser matrixUser);
 
 int matrix_user_comp(MatrixUser **a, MatrixUser **b);
+int matrix_file_comp(MatrixFile **a, MatrixFile **b);
 
 #endif

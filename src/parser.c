@@ -8,6 +8,9 @@ Parser parser_init(ParserConfig config) {
 
 void parser_add_chunk(Parser *parser, char *chunk) {
   call(parser->on_commit, (ParserCommit){
-    .committerEmail = "qwe@asd.com"
+    .committerEmail = "qwe@asd.com",
+    .files = (ParserCommitFile[]){
+      (ParserCommitFile){ .name = "yaya.txt" }
+    }
   });
 }
