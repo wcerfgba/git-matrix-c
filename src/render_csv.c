@@ -12,5 +12,21 @@ char *render_csv(Matrix *matrix) {
     csv = sdscat(csv, (*(MatrixUser **)(user))->email);
   }
 
+  csv = sdscat(csv, "\n");
+
+  for (int i = 0; i < sb_count(matrix->files); i++) {
+    MatrixFile **file = matrix->files + i;
+    csv = sdscat(csv, (*file)->name);
+
+    for (int j = 0; j < sb_count(matrix->users); j++) {
+      csv = sdscat(csv, ",");
+      char score[1024] = { 0 };
+      sprintf(score, "%d", (matrix->cells[i][j])->value);
+      csv = sdscat(csv, score);
+    }
+
+    csv = sdscat(csv, "\n");
+  }
+
   return csv;
 }
